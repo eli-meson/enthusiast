@@ -1,0 +1,38 @@
+header:
+  version: 14
+
+machine: qemuarm
+distro: poky
+target: core-image-minimal
+
+repos:
+  poky:
+    url: git@github.com:yoctoproject/poky.git
+    path: layers/poky
+    commit: 7dad83c7e5e9637c0ff5d5712409611fd4a14946
+    branch: scarthgap
+    layers:
+      meta:
+      meta-poky:
+
+local_conf_header:
+  standard: |
+    CONF_VERSION = "2"
+    SDKMACHINE = "x86_64"
+    USER_CLASSES = "buildstats"
+    PATCHRESOLVE = "noop"
+    CONNECTIVITY_CHECK_URIS = ""
+
+  debug-tweaks: |
+    EXTRA_IMAGE_FEATURES = "debug-tweaks ssh-server-dropbear"
+
+  diskmon: |
+    BB_DISKMON_DIRS = "\
+        STOPTASKS,${TMPDIR},1G,100K \
+        STOPTASKS,${DL_DIR},1G,100K \
+        STOPTASKS,${SSTATE_DIR},1G,100K \
+        STOPTASKS,/tmp,100M,100K \
+        ABORT,${TMPDIR},100M,1K \
+        ABORT,${DL_DIR},100M,1K \
+        ABORT,${SSTATE_DIR},100M,1K \
+        ABORT,/tmp,10M,1K"
