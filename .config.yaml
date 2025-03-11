@@ -7,7 +7,7 @@ target: core-image-minimal
 
 repos:
   poky:
-    url: git@github.com:yoctoproject/poky.git
+    url: https://git.yoctoproject.org/poky
     path: layers/poky
     commit: 7dad83c7e5e9637c0ff5d5712409611fd4a14946
     branch: scarthgap
