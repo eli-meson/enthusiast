@@ -1,0 +1,16 @@
+[host_machine]
+system = 'linux'
+cpu_family = 'arm'
+cpu = 'armv7'
+endian = 'little'
+
+[binaries]
+c = 'arm-linux-gnueabihf-gcc'
+cpp = 'arm-linux-gnueabihf-g++'
+ar = 'arm-linux-gnueabihf-ar'
+strip = 'arm-linux-gnueabihf-strip'
+pgkconfig = 'pkg-config'
+
+[paths]
+prefix = '/usr/arm-linux-gnueabihf'
+libdir = '/usr/arm-linux-gnueabihf/lib'

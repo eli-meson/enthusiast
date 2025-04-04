@@ -75,4 +75,32 @@ RUN cd /var/lib/gems/2.7.0/gems/ceedling-0.31.1/plugins/ && \
     git clone --recurse https://github.com/ElectronVector/fake_function_framework.git && \
     cd -
 
+## GLib
+### GLib for x86
+RUN cd /tmp \
+    && wget https://download.gnome.org/sources/glib/2.82/glib-2.82.0.tar.xz \
+    && tar xf glib-2.82.0.tar.xz
+
+COPY scripts/glib_x86.txt /tmp/glib-2.82.0/glib_x86.txt
+
+RUN cd /tmp/glib-2.82.0 \
+    && meson setup _build --cross-file glib_x86.txt \
+    && ninja -C _build \
+    && ninja -C _build install \
+    && ninja -C _build clean
+
+### GLib for ARM
+RUN rm -rf /tmp/glib-2.82.0
+
+RUN cd /tmp \
+    && tar xf glib-2.82.0.tar.xz \
+    && rm glib-2.82.0.tar.xz
+
+COPY scripts/glib_arm.txt /tmp/glib-2.82.0/glib_arm.txt
+
+RUN cd /tmp/glib-2.82.0 \
+    && meson setup _build --cross-file glib_arm.txt \
+    && ninja -C _build \
+    && ninja -C _build install \
+    && ninja -C _build clean
 #ENTRYPOINT ["/bin/bash", "-c", "/usr/bin/entrypoint.sh ${*}", "--"]
