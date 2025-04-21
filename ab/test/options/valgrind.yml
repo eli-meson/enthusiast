@@ -1,0 +1,53 @@
+---
+# Notes:
+# This build configuration allows to build unit tests as 32 bit low-endian application
+# for x86 platform and execute them under valgrind
+
+:tools:
+  :test_fixture:
+    :executable: valgrind
+    :arguments:
+      - --leak-check=full
+      - --show-leak-kinds=all
+      - --track-origins=yes
+      - --error-exitcode=1
+      # test_fixture with valgrind integrated with exit code is not making ceedling fail
+      # https://giters.com/ThrowTheSwitch/Ceedling/issues/826
+      - --error-markers=@VALGRIND-START,@VALGRIND-STOP
+      - "${1}"
+
+:paths:
+  :support:
+    - /usr/include
+    - /usr/include/i386-linux-gnu
+    - /usr/local/include/glib-2.0
+    - /usr/local/lib/glib-2.0
+  :libraries:
+    - /usr/lib32
+    - /usr/local/lib
+
+:flags:
+  :test:
+    :compile:
+      :*:     # all files
+        - -m32
+        - -O2
+    :link:
+      :*:     # all files
+        - -m32
+  :gcov:
+    :compile:
+      :*:     # all files
+        - -m32
+        - -O2
+        # Flags to collect the profiling data in the gmon.out
+        # Note: each test's gmon.out is overwritten by the next test.
+        # To generate report, for example, for test_app_com_alm_main:
+        # $ ./build_ut/gcov/out/test_app_com_alm_main.out
+        # $ gprof -b ./build_ut/gcov/out/test_app_com_alm_main.out gmon.out > gprof.stats
+        - -pg
+        - -g
+    :link:
+      :*:     # all files
+        - -m32
+...

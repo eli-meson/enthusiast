@@ -1,0 +1,49 @@
+---
+
+# This build configuration allows to build unit tests for Pasolink
+# as 32 bit little-endian application for ARM platform and execute them on QEMU.
+#
+# Docker-file to build an image with required enviroment:
+#   ./build/docker/pasolink-unit-test.Dockerfile
+#
+# To install requred software on a host:
+#   $ sudo apt-get install gcc-multilib-arm-linux-gnueabihf qemu-user
+
+:tools:
+  :test_compiler:
+    :executable: arm-linux-gnueabihf-gcc
+  :test_linker:
+    :executable: arm-linux-gnueabihf-gcc
+  :test_fixture:
+    :executable: qemu-arm
+    :arguments:
+      - -L /usr/arm-linux-gnueabihf
+      - "${1}"
+  :gcov_compiler:
+    :executable: arm-linux-gnueabihf-gcc
+  :gcov_linker:
+    :executable: arm-linux-gnueabihf-gcc
+  :gcov_fixture:
+    :executable: qemu-arm
+    :arguments:
+      - -L /usr/arm-linux-gnueabihf
+      - "${1}"
+
+:paths:
+  :support:
+    - /usr/arm-linux-gnueabi/include
+    - /usr/arm-linux-gnueabihf/include/glib-2.0
+  :libraries:
+    - /usr/arm-linux-gnueabihf/lib
+
+:flags:
+  :test:
+    :compile:
+      :*:     # all files
+        - -O2
+  :gcov:
+    :compile:
+      :*:     # all files
+        - -O2
+        - -DNDEBUG # to exclude assert() branches from the coverage report
+...
