@@ -14,6 +14,9 @@ repos:
       meta:
       meta-poky:
       meta-yocto-bsp:
+  meta-driver:
+    layers:
+      meta-driver:
 
 local_conf_header:
   standard: |
