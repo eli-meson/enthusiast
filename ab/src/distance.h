@@ -1,0 +1,1 @@
+int find_total_distance(int *first, int *second, int size);
