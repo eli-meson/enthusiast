@@ -9,6 +9,6 @@
 
 int* B_Sort(int n[]);
 int B_Find_Diff(int x, int y);
-int* B_Array_Of_Distances(int n1[] , int n2[]);
+
 
 #endif // B_H
