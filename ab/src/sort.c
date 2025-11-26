@@ -20,5 +20,5 @@ int compare(const void *x, const void *y)
 
 void sort_list(int *list, int size)
 {
-    qsort(list, size - 1, sizeof(list[0]), compare);
+    qsort(list, size, sizeof(list[0]), compare);
 }
