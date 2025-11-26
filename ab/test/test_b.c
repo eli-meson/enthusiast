@@ -17,14 +17,11 @@ void tearDown(void)
 void test_B_Sort(void)
 {
    int toSort[] = {2, 3, 2, 7, 1};
-   int *ptr;
-   ptr = &toSort;
    int expected[] = {1, 2, 2, 3, 7};
-   int *received = B_Sort(ptr);
-
+   B_Sort(toSort);
    for(int i = 0; i < 5; i++) {
-      printf("%x", *received);
-      TEST_ASSERT_EQUAL_INT16_MESSAGE(expected[i], received[i], "Sorted.");
+      //printf("%x", *received);
+      TEST_ASSERT_EQUAL_INT16_MESSAGE(expected[i], toSort[i], "Sorted.");
    }
    
 }
