@@ -10,5 +10,5 @@ void test_cd_integration(void)
    TEST_ASSERT_EQUAL(1, read_file("src/fake.txt", &total));
    TEST_ASSERT_EQUAL(0, read_file(NULL, &total));
    TEST_ASSERT_EQUAL(0, read_file("src/fake.txt", NULL));
-   TEST_ASSERT_EQUAL(0, read_file(NULL, &total));
+   TEST_ASSERT_EQUAL(0, read_file(NULL, NULL));
 }

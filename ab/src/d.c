@@ -3,6 +3,10 @@
 #include <stdio.h>
 
 int read_file(const char* filename, int* total) {
+    if (filename == NULL || total == NULL) {
+        return 0;
+    }
+
     FILE *in;
     *total = 0;
     in = fopen(filename, "r");
@@ -12,7 +16,9 @@ int read_file(const char* filename, int* total) {
     char buffer[50];
     while (fgets(buffer, sizeof(buffer), in) != NULL) {
         int w = getLineValue(buffer);
-        *total += w;
+        if (w != -1) {
+            *total += w;
+        }
     }
     return 1;
 }
