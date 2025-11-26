@@ -28,7 +28,12 @@ void tearDown(void)
 //    TEST_ASSERT_EQUAL(1, B_Sum_fake.arg1_val);
 // }
 void test_finalsumm(void){
-   TEST_ASSERT_EQUAL(8, finalsumm("1245","3476"));
+
+   uint16_t arr1[] = {1, 2, 4, 5};
+   uint16_t arr2[] = {3, 4, 7, 6};
+   uint16_t size = 4;
+
+   TEST_ASSERT_EQUAL(8, finalsumm(arr1, arr2, size));
 }
 
 // static uint16_t B_Sum_callback(uint16_t x, uint16_t y)

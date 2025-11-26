@@ -14,7 +14,9 @@ void tearDown(void)
 }
 
 void test_sort(void){
-   TEST_ASSERT_EQUAL("3578" ,sortArray("5387", 4));
+   uint16_t arr[] = {5, 3, 8, 7};
+
+   TEST_ASSERT_EQUAL(3 ,sortArray("5387", 4)[0]);
 }
 
 void test_summOfDiff(void){

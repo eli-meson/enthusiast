@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-uint16_t finalsumm(char * arr1, char * arr2);
+uint16_t finalsumm(uint16_t * arr1, uint16_t * arr2, uint16_t size);
 
 #endif // A_H
 

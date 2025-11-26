@@ -17,11 +17,10 @@
 //    }
 // }
 
-uint16_t * readFile(char * fname) {
-
-}
-
-uint16_t finalsumm(char * arr1, char * arr2)
+uint16_t finalsumm(uint16_t * arr1, uint16_t * arr2, uint16_t size)
 {
-   return 0;
+   sortArray(arr1, size);
+   sortArray(arr2, size);
+
+   return SumOfDiff(arr1, arr2);
 }
