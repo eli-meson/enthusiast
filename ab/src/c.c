@@ -3,10 +3,27 @@
 #include <stdlib.h>
 
 int getLineValue(char* line) {
-    int a;
-    int b;
-    sscanf(line, "%d %d\n", &a, &b);
+    if(line == NULL) {
+        return -1;
+    }
+
+
+
+    int a = NULL;
+    int b = NULL;
+    int result = sscanf(line, "%d %d", &a, &b);
+
+    if (result == 1) {
+        return 0;
+    }
+
+
     int diff = a - b;
-    return abs(diff);
+    int finalValue = abs(diff);
+
+    if (a == NULL && b == NULL) {
+        return -1;
+    }
+    return finalValue;
 }
 
