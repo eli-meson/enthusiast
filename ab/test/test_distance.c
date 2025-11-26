@@ -20,5 +20,5 @@ void test_distance()
 
     int distance = find_total_distance(test_list1, test_list2, test_size);
 
-    TEST_ASSERT_EQUAL(0, distance);
+    TEST_ASSERT_EQUAL(11, distance);
 }
