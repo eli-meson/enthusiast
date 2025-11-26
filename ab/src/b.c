@@ -1,28 +1,26 @@
 #include "b.h"
 
 #include <assert.h>
+#include <stdlib.h>
+#include <math.h>
 
-uint16_t B_Sum(uint16_t x, uint16_t y)
-{
-   return x + y;
+
+
+void sortArray(uint16_t * arr, uint16_t size){
+    qsort(arr, size, sizeof(uint16_t));
 }
 
-uint16_t B_Mult(uint16_t x, uint16_t y)
+uint16_t SumOfDiff(const uint16_t * arr1, const uint16_t * arr2)
 {
-   assert(x < UINT8_MAX);
-   assert(y < UINT8_MAX);
+    uint16_t size = sizeof(arr1)/sizeof(uint16_t);
+    if (sizeof(arr1) == sizeof(arr2))
+    {
+        uint16_t sum = 0; 
+        for (int i = 0; i < size; ++i){
+            sum += abs(arr1[i] - arr2[i]);
+        }
+        return sum;
+    }
 
-   uint16_t result = 0;
-
-   for(uint8_t iter = 0; iter < y; iter++)
-   {
-       result += x;
-   }
-
-   return result;
-}
-
-uint16_t B_Div2(uint16_t x)
-{
-    return x >> 1;
+    return 0;
 }

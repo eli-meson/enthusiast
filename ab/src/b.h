@@ -3,8 +3,7 @@
 
 #include <stdint.h>
 
-uint16_t B_Sum(uint16_t x, uint16_t y);
-uint16_t B_Mult(uint16_t x, uint16_t y);
-uint16_t B_Div2(uint16_t x);
+void sortArray(uint16_t * arr, uint16_t size);
+uint16_t SumOfDiff(const uint16_t * arr1, const uint16_t * arr2);
 
 #endif // B_H

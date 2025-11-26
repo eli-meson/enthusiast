@@ -3,6 +3,8 @@
 
 #include <stdint.h>
 
-uint32_t A_SumOfN(uint8_t n);
+uint16_t finalsumm(char * arr1, char * arr2);
 
 #endif // A_H
+
+// main("1245", "7436") = 8
