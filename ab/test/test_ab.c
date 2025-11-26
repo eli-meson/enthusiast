@@ -14,5 +14,5 @@ void tearDown(void)
 
 void test_ab(void)
 {
-
+   TEST_ASSERT_EQUAL(8, finalsumm("1245","3476"));
 }

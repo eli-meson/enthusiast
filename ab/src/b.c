@@ -6,8 +6,10 @@
 
 
 
-void sortArray(uint16_t * arr, uint16_t size){
-    qsort(arr, size, sizeof(uint16_t));
+char * sortArray(uint16_t * arr, uint16_t size){
+    // qsort(arr, size, sizeof(uint16_t));
+    char* str;
+    return str;
 }
 
 uint16_t SumOfDiff(const uint16_t * arr1, const uint16_t * arr2)
