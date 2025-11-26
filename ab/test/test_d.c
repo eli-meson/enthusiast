@@ -7,20 +7,19 @@
 
 void test_d_auto_mock(void)
 {
-   TEST_ASSERT_NOT_CALLED(read_file);ceedling trrst:
+   TEST_ASSERT_NOT_CALLED(read_file);
 
    int total;
    int result = read_file("src/fake.txt", &total);
+   
 
    TEST_ASSERT_CALLED(read_file);
 
    TEST_ASSERT_EQUAL(1, result);
-}
-
-
-int getLineValue(char* line)
-{
-   return 4;
+   TEST_ASSERT_EQUAL(1, read_file(fake.txt, &total));
+   TEST_ASSERT_EQUAL(0, read_file(NULL, &total));
+   TEST_ASSERT_EQUAL(0, read_file(fake.txt, NULL));
+   TEST_ASSERT_EQUAL(0, read_file(NULL, &total));
 }
 
 void test_c_custom_fake(void)

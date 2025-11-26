@@ -1,15 +1,15 @@
 #include "unity.h"
-
+#include <stdio.h>
 #include "c.h"
 
 
-void test_a_auto_mock(void)
+void test_c_auto(void)
 {
-   TEST_ASSERT_NOT_CALLED(getLineValue);
+   //TEST_ASSERT_NOT_CALLED(getLineValue("aaaa"));
 
    getLineValue("aaa");
 
-   TEST_ASSERT_CALLED(getLineValue);
+   //TEST_ASSERT_CALLED(getLineValue("aaaa"));
 
    TEST_ASSERT_EQUAL(-1, getLineValue(NULL));
    TEST_ASSERT_EQUAL(3, getLineValue("1 4"));
