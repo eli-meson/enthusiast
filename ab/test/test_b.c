@@ -29,6 +29,14 @@ void test_B_Sort(void)
    
 }
 
+void test_Find_Diff(void)
+{
+   int expected = 5;
+   int received = B_Find_Diff(5, 10);
+   TEST_ASSERT_EQUAL_INT16_MESSAGE(expected, received, "Diffed.");
+   
+}
+
 // A single run test 
 // void test_B_Sum_single(void)
 // {
