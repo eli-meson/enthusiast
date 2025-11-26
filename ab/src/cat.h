@@ -1,0 +1,1 @@
+void cat_say_hello(char *buf);

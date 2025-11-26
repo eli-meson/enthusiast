@@ -1,0 +1,1 @@
+void announce(char *buf, char *name);
