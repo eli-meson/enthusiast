@@ -8,6 +8,7 @@ typedef enum {
     STATE_START,
     STATE_CMD,
     STATE_LEN,
+    STATE_DATA,
     STATE_END
 } state_t;
 
