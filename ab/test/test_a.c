@@ -4,6 +4,13 @@
 #include "a.h"
 #include "mock_b.h"
 
+#define TEST_CASE(...)
+
+extern State_t state;
+extern int len;
+extern int counter;
+extern char buffer[22];
+
 void setUp(void)
 {
 }
@@ -16,16 +23,82 @@ void test_blank(void) {
    TEST_ASSERT_NULL(accept_byte('['));
 }
 
-void test_start(void)
+TEST_CASE('[')
+void test_start_to_cmd(char aCh)
 {
-   State_t state = STATE_NONE;
-   TEST_ASSERT_EQUAL(state, STATE_NONE);
-   TEST_ASSERT_EQUAL("[", accept_byte('['));
-   TEST_ASSERT_EQUAL(state, STATE_START);
-
+   //GIVEN
+   state = STATE_START;
+   //WHEN
+   accept_byte(aCh);
+   //THEN
+   TEST_ASSERT_EQUAL(state, STATE_CMD);
+   TEST_ASSERT_EQUAL('[', buffer);
 }
 
-void test_valid_data(void) {
+TEST_CASE('A')
+TEST_CASE('M')
+TEST_CASE('Z')
+void test_cmd_to_len(char aCh)
+{
+   //GIVEN
+   state = STATE_CMD;
+   //WHEN
+   accept_byte(aCh);
+   //THEN
+   TEST_ASSERT_EQUAL(state, STATE_LEN);
+}
+
+TEST_CASE('6')
+TEST_CASE('2')
+TEST_CASE('a')
+void test_cmd_to_len_incorrect(char aCh)
+{
+   //GIVEN
+   state = STATE_CMD;
+   //WHEN
+   accept_byte(aCh);
+   //THEN
+   TEST_ASSERT_EQUAL(state, STATE_START);
+}
+
+TEST_CASE('[')
+void test_cmd_to_len_incorrect_bracket(char aCh)
+{
+   //GIVEN
+   state = STATE_CMD;
+   //WHEN
+   accept_byte(aCh);
+   //THEN
+   TEST_ASSERT_EQUAL(state, STATE_CMD);
+}
+
+TEST_CASE('0')
+void test_len_to_end(char aCh)
+{
+   //GIVEN
+   state = STATE_LEN;
+   //WHEN
+   accept_byte(aCh);
+   //THEN
+   TEST_ASSERT_EQUAL(state, STATE_END);
+}
+
+TEST_CASE('4')
+TEST_CASE('b')
+TEST_CASE('M')
+void test_data_to_end(char aCh)
+{
+   //GIVEN
+   state = STATE_DATA;
+   len = 5;
+   counter = 4;
+   //WHEN
+   accept_byte(aCh);
+   //THEN
+   TEST_ASSERT_EQUAL(state, STATE_END);
+}
+
+void _test_valid_data(void) {
    char buffer = '[';
 
    // Successful Case
