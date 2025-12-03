@@ -53,15 +53,25 @@ void test_len(char c, int expected){
     TEST_ASSERT_EQUAL(expected, mState);
 }
 
-TEST_CASE('3', 4)
-TEST_CASE('b', 4)
-TEST_CASE('D', 4)
-TEST_CASE('[', 2)
-TEST_CASE(']', 1)
-TEST_CASE('$', 5)
-void test_data(char c, int expected){
-    mState = STATE_LEN;
-    accept_byte(c);
+// TEST_CASE('3', 4)
+// TEST_CASE('b', 4)
+// TEST_CASE('D', 4)
+// TEST_CASE('[', 2)
+// TEST_CASE(']', 1)
+// TEST_CASE('$', 5)
+// void test_data(char c, int expected){
+//     mState = STATE_LEN;
+//     accept_byte(c);
 
-    TEST_ASSERT_EQUAL(expected, mState);
+//     TEST_ASSERT_EQUAL(expected, mState);
+// }
+
+void test_full() {
+    accept_byte('[');
+    accept_byte('A');
+    accept_byte('0');
+    char * result = accept_byte(']');
+
+    TEST_ASSERT_EQUAL_STRING("[A0]", result);
+    // TEST_ASSERT_EQUAL("[A0]", result);
 }

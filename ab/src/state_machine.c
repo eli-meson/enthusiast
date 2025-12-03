@@ -4,7 +4,7 @@
 #include <string.h>
 
 State_t mState;
-char buffer[19];
+char buffer[23];
 int length;
 
 char * accept_byte(char c) {
@@ -13,15 +13,22 @@ char * accept_byte(char c) {
     char * res = NULL;
     switch (mState) {
         case STATE_START:
+            pos = 0;
             if (c == '[') {
                 mState = STATE_CMD;
+                buffer[pos] = c;
+                pos++;
             }
             break;
         case STATE_CMD:
             if (c <= 'Z' && c >= 'A') {
                 mState = STATE_LEN;
+                buffer[pos] = c;
+                pos++;
             } else if (c == '[') {
                 mState = STATE_CMD;
+                pos = 0;
+                buffer[pos] = 0;
             }else  {
                 mState = STATE_START;
             }
@@ -29,29 +36,51 @@ char * accept_byte(char c) {
         case STATE_LEN:
             if (c <= '9' && c >= '1') {
                 mState = STATE_DATA;
-                length = ctoi(c);
-                pos = 0;
+                buffer[pos] = c;
+                pos++;
             }
             else if (c == '[') {
                 mState = STATE_CMD;
+                pos = 0;
+                buffer[pos] = c;
             }
             else if (c == '0') {
                 mState = STATE_END;
+                buffer[pos] = c;
+                pos++;
             }
             else  {
                 mState = STATE_START;
             }
             break;
 
-        case STATE_DATA:
-        if ((c >= 'A' && c <= 'F') || (c >= '0' && c <= '9') || (c >= 'a' && c <= 'f')) {
-            buffer[pos] = c;
-            pos++;
-        }
-        else if (c == '[') {
-            mState = STATE_CMD;
-        }
-        break;
+        // case STATE_DATA:
+        // if ((c >= 'A' && c <= 'F') || (c >= '0' && c <= '9') || (c >= 'a' && c <= 'f')) {
+        //     buffer[pos] = c;
+        //     pos++;
+        // }
+        // else if (c == '[') {
+        //     mState = STATE_CMD;
+        // }
+        // break;
+        case STATE_END:
+            if (c == ']') {
+                buffer[pos] = c;
+                pos++;
+                buffer[pos] = '\0';
+                res = buffer;
+                mState = STATE_START;
+            } else if (c == '[') {
+                mState = STATE_CMD;
+            }
+            else  {
+                mState = STATE_START;
+            }
+            break;
     }
+
+    // if (mState == STATE_START || STATE_CMD) {
+    //     length = -1;
+    // }
     return res;
 }
