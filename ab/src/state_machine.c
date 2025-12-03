@@ -6,6 +6,7 @@
 State_t mState;
 char buffer[23];
 int pos;
+int length;
 
 void reset() {
     pos = 0;
@@ -41,6 +42,7 @@ char * accept_byte(char c) {
             if (c <= '9' && c >= '1') {
                 mState = STATE_DATA;
                 buffer[pos] = c;
+                length = ((c - '1') + 1) * 2;
                 pos++;
             }
             else if (c == '[') {
@@ -67,12 +69,28 @@ char * accept_byte(char c) {
         //     mState = STATE_CMD;
         // }
         // break;
-        case STATE_END:
+        case STATE_DATA:
             if ((c >= 'A' && c <= 'F') || (c >= '0' && c <= '9') || (c >= 'a' && c <= 'f')) {
                 buffer[pos] = c;
                 pos++;
+                length--;
+                if (length <= 0) {
+                    mState = STATE_END;
+                }
             }
-            else if (c == ']') {
+            else if (c == '[')  {
+                reset();
+                mState = STATE_CMD;
+                buffer[pos] = '[';
+                pos++;
+            }
+            else {
+                mState = STATE_START;
+            }
+            break;
+
+        case STATE_END:
+            if (c == ']') {
                 buffer[pos] = c;
                 pos++;
                 buffer[pos] = '\0';

@@ -90,3 +90,33 @@ void test_full2() {
     TEST_ASSERT_EQUAL_STRING("[A0]", result);
     // TEST_ASSERT_EQUAL("[A0]", result);
 }
+
+void test_full3() {
+    accept_byte('[');
+    accept_byte('A');
+    accept_byte('0');
+
+    char * result = accept_byte('S');
+
+    TEST_ASSERT_NULL(result);
+    TEST_ASSERT_EQUAL(1, mState);
+}
+
+extern int length;
+
+void test_full4() {
+    accept_byte('[');
+    accept_byte('A');
+    accept_byte('1');
+
+    TEST_ASSERT_EQUAL(2,  length);
+
+    accept_byte('3');
+    accept_byte('f');
+
+    TEST_ASSERT_EQUAL(0, length);
+
+    char * result = accept_byte(']');
+
+    TEST_ASSERT_EQUAL_STRING("[A13f]", result);
+}
