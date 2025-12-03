@@ -170,3 +170,4 @@ void test_max_valid_packet(void) {
     TEST_ASSERT_EQUAL_STRING("[Z925aFd39A19f527bDc9]", data);
     TEST_ASSERT_EQUAL(STATE_START, mState);
 }
+

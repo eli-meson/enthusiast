@@ -48,10 +48,10 @@ char* accept_byte(char c){
         }
 
     } else if (mState == STATE_DATA) {
-        if (!IS_DATA(c)){
-            mState = STATE_START;
-        } else if (c == '['){
+        if (c == '['){
             mState = STATE_CMD;
+        } else if (!IS_DATA(c)){
+            mState = STATE_START;
         } else { // else state writes to buffer
             fsm_buf[3 + nibbles_written++] = c;
             if (nibbles_written == data_len*2){
