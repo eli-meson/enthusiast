@@ -123,6 +123,10 @@ void test_full4() {
 
 void test_max() {
     TEST_ASSERT_NULL(accept_byte('['));
+//    TEST_ASSERT_NULL(accept_byte('Z'));
+//    TEST_ASSERT_NULL(accept_byte('9'));
+
+    TEST_ASSERT_NULL(accept_byte('['));
     TEST_ASSERT_NULL(accept_byte('Z'));
     TEST_ASSERT_NULL(accept_byte('9'));
     TEST_ASSERT_NULL(accept_byte('1'));

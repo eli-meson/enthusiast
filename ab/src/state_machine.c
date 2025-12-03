@@ -31,10 +31,9 @@ char * accept_byte(char c) {
                 buffer[pos] = c;
                 pos++;
             } else if (c == '[') {
-                reset();
-                mState = STATE_CMD;
-                buffer[pos] = 0;
-            }else  {
+
+            }
+            else  {
                 mState = STATE_START;
             }
             break;
@@ -74,7 +73,7 @@ char * accept_byte(char c) {
                 buffer[pos] = c;
                 pos++;
                 length--;
-                if (length <= 0) {
+                if (length == 0) {
                     mState = STATE_END;
                 }
             }
