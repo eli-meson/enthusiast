@@ -2,15 +2,17 @@
 #include "fff.h"
 #include "state_machine.h"
 
-void setUp(void) {
+#define TEST_CASE(...)
 
+extern State_t mState;
+
+void setUp(void) {
+    mState = STATE_START;
 }
 
 void tearDown(void) {
 
 }
-
-extern State_t mState;
 
 void test_accept_byte(){
     char *result = accept_byte('a');
@@ -27,18 +29,37 @@ void test_transition() {
     TEST_ASSERT_EQUAL(STATE_CMD, mState);
 }
 
-void test_cmd() {
-    accept_byte('[');
-    accept_byte('A');
+TEST_CASE('A', 3)
+TEST_CASE('[', 2)
+TEST_CASE('3', 1)
+void test_cmd(char c, int expected) {
+    mState = STATE_CMD;
+    accept_byte(c);
 
-    TEST_ASSERT_EQUAL(STATE_LEN, mState);
+    TEST_ASSERT_EQUAL(expected, mState);
 }
 
-void test_len() {
+
+
+
+TEST_CASE('3', 4)
+TEST_CASE('[', 2)
+TEST_CASE('A', 1)
+TEST_CASE('0', 5)
+void test_len(char c, int expected){
     mState = STATE_LEN;
+    accept_byte(c);
 
-    accept_byte('9');
-
-    TEST_ASSERT_EQUAL(STATE_DATA, mState);
+    TEST_ASSERT_EQUAL(expected, mState);
 }
 
+// TEST_CASE('3', 4)
+// TEST_CASE('[', 2)
+// TEST_CASE('A', 1)
+// TEST_CASE('0', 5)
+// void test_(char c, int expected){
+//     mState = STATE_LEN;
+//     accept_byte(c);
+
+//     TEST_ASSERT_EQUAL(expected, mState);
+// }
