@@ -8,8 +8,7 @@
 
 extern State_t state;
 extern int len;
-extern int counter;
-extern char buffer[22];
+extern int data_counter;
 
 void setUp(void)
 {
@@ -22,6 +21,7 @@ void tearDown(void)
 void test_blank(void) {
    TEST_ASSERT_NULL(accept_byte('['));
 }
+// VALID TEST CASES
 
 TEST_CASE('[')
 void test_start_to_cmd(char aCh)
@@ -29,10 +29,10 @@ void test_start_to_cmd(char aCh)
    //GIVEN
    state = STATE_START;
    //WHEN
-   accept_byte(aCh);
+   char* ptr = accept_byte(aCh);
    //THEN
    TEST_ASSERT_EQUAL(state, STATE_CMD);
-   TEST_ASSERT_EQUAL('[', buffer);
+   TEST_ASSERT_EQUAL('[', ptr[0]);
 }
 
 TEST_CASE('A')
@@ -48,18 +48,6 @@ void test_cmd_to_len(char aCh)
    TEST_ASSERT_EQUAL(state, STATE_LEN);
 }
 
-TEST_CASE('6')
-TEST_CASE('2')
-TEST_CASE('a')
-void test_cmd_to_len_incorrect(char aCh)
-{
-   //GIVEN
-   state = STATE_CMD;
-   //WHEN
-   accept_byte(aCh);
-   //THEN
-   TEST_ASSERT_EQUAL(state, STATE_START);
-}
 
 TEST_CASE('[')
 void test_cmd_to_len_incorrect_bracket(char aCh)
@@ -91,35 +79,110 @@ void test_data_to_end(char aCh)
    //GIVEN
    state = STATE_DATA;
    len = 5;
-   counter = 4;
+   data_counter = 4;
    //WHEN
    accept_byte(aCh);
    //THEN
    TEST_ASSERT_EQUAL(state, STATE_END);
 }
 
-void _test_valid_data(void) {
-   char buffer = '[';
+TEST_CASE(']')
+void test_end_to_start(char aCh)
+{
+   //GIVEN
+   state = STATE_END;
+   //WHEN
+   accept_byte(aCh);
+   //THEN
+   TEST_ASSERT_EQUAL(state, STATE_START);
+}
 
-   // Successful Case
-   TEST_ASSERT_EQUAL("[", accept_byte('['));
-   // Test that state is 'looking for cmd'
-   TEST_ASSERT_EQUAL("[B", accept_byte('B'));
-   // Test that state is length
-   TEST_ASSERT_EQUAL("[B4", accept_byte('4'));
-   // Test that state is getting data
-   TEST_ASSERT_EQUAL("[B48", accept_byte('8'));
-   TEST_ASSERT_EQUAL("[B485", accept_byte('5'));
-   TEST_ASSERT_EQUAL("[B4859", accept_byte('9'));
-   TEST_ASSERT_EQUAL("[B48592", accept_byte('2'));
-   // Test that state is looking for end
-   TEST_ASSERT_EQUAL("[B48592]", accept_byte(']'));
-   // Test looking for start
+// INVALID TEST CASES
+
+TEST_CASE('1')
+void test_start_to_cmd_invalid(char aCh) {
+   //GIVEN
+   state = STATE_START;
+   //WHEN
+   accept_byte(aCh);
+   //THEN
+   TEST_ASSERT_EQUAL(state, STATE_START);
+}
+
+TEST_CASE('6')
+TEST_CASE('2')
+TEST_CASE('a')
+void test_cmd_to_len_invalid(char aCh)
+{
+   //GIVEN
+   state = STATE_CMD;
+   //WHEN
+   accept_byte(aCh);
+   //THEN
+   TEST_ASSERT_EQUAL(state, STATE_START);
+}
+
+TEST_CASE('[')
+void test_cmd_to_len_invalid_bracket(char aCh)
+{
+   //GIVEN
+   state = STATE_CMD;
+   //WHEN
+   accept_byte(aCh);
+   //THEN
+   TEST_ASSERT_EQUAL(state, STATE_CMD);
+}
+
+void test_max_valid_packet() {
+   //GIVEN
+   state = STATE_START;
+   //WHEN
+   char* ptr = accept_byte('[');
+   ptr = accept_byte('B');
+   ptr = accept_byte('9');
+   ptr = accept_byte('A');
+   ptr = accept_byte('b');
+   ptr = accept_byte('c');
+   ptr = accept_byte('1');
+   ptr = accept_byte('2');
+   ptr = accept_byte('3');
+   ptr = accept_byte('f');
+   ptr = accept_byte('5');
+   ptr = accept_byte('7');
+   ptr = accept_byte('8');
+   ptr = accept_byte('9');
+   ptr = accept_byte('c');
+   ptr = accept_byte('d');
+   ptr = accept_byte('e');
+   ptr = accept_byte('4');
+   ptr = accept_byte('2');
+   ptr = accept_byte('1');
+   ptr = accept_byte('a');
+   ptr = accept_byte('a');
+   ptr = accept_byte('a');
+   ptr = accept_byte('a');
+   ptr = accept_byte('a');
+   ptr = accept_byte('a');
+
+   ptr = accept_byte(']');
 
 
-   // Unsuccessful Case
-   TEST_ASSERT_EQUAL("", accept_byte('3'));   // should be looking for start
+   //THEN
+   TEST_ASSERT_EQUAL(state, STATE_START);
+   TEST_ASSERT_EQUAL_STRING("[B9Abc123f5789cde421a]", ptr);
+}
 
-   TEST_ASSERT_EQUAL("[", accept_byte('['));
-   TEST_ASSERT_EQUAL("", accept_byte(' '));   // should be looking for start
+void test_start_to_cmd_2(void)
+{
+   //GIVEN
+   char expected[] = {'[', 'A', '0', ']'};
+   state = STATE_START;
+   //WHEN
+   char* ptr = accept_byte('[');
+   ptr = accept_byte('A');
+   ptr = accept_byte('0');
+   ptr = accept_byte(']');
+   //THEN
+   TEST_ASSERT_EQUAL(state, STATE_START);
+   TEST_ASSERT_EQUAL_CHAR_ARRAY(expected, ptr, 4);
 }
