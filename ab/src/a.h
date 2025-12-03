@@ -3,6 +3,13 @@
 
 #include <stdint.h>
 
-uint32_t A_SumOfN(uint8_t n);
+typedef enum {
+    STATE_NONE;
+    STATE_START;
+    STATE_CMD;
+} State_t;
+
+char* accept_byte(char c);
+
 
 #endif // A_H

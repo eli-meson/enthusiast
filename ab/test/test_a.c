@@ -12,54 +12,41 @@ void tearDown(void)
 {
 }
 
-void test_a_auto_mock(void)
-{
-   TEST_ASSERT_NOT_CALLED(B_Sum);
-   TEST_ASSERT_NOT_CALLED(B_Mult);
-   TEST_ASSERT_NOT_CALLED(B_Div2);
-
-   A_SumOfN(10);
-
-   TEST_ASSERT_CALLED(B_Sum);
-   TEST_ASSERT_CALLED(B_Mult);
-   TEST_ASSERT_CALLED(B_Div2);
-
-   TEST_ASSERT_EQUAL(10, B_Sum_fake.arg0_val);
-   TEST_ASSERT_EQUAL(1, B_Sum_fake.arg1_val);
+void test_blank(void) {
+   TEST_ASSERT_NULL(accept_byte('['));
 }
 
-
-static uint16_t B_Sum_callback(uint16_t x, uint16_t y)
+void test_start(void)
 {
-   return x + y;
+   State_t state = STATE_NONE;
+   TEST_ASSERT_EQUAL(state, STATE_NONE);
+   TEST_ASSERT_EQUAL("[", accept_byte('['));
+   TEST_ASSERT_EQUAL(state, STATE_START);
+
 }
-static uint16_t B_Mult_callback(uint16_t x, uint16_t y)
-{
-   return x * y;
-}
-static uint16_t B_Div2_callback(uint16_t x)
-{
-   return x / 2;
-}
-void test_a_custom_fake(void)
-{
-   B_Sum_fake.custom_fake = B_Sum_callback;
-   B_Mult_fake.custom_fake = B_Mult_callback;
-   B_Div2_fake.custom_fake = B_Div2_callback;
 
-   TEST_ASSERT_NOT_CALLED(B_Sum);
-   TEST_ASSERT_NOT_CALLED(B_Mult);
-   TEST_ASSERT_NOT_CALLED(B_Div2);
+void test_valid_data(void) {
+   char buffer = '[';
 
-   TEST_ASSERT_EQUAL(1, A_SumOfN(1));
-   TEST_ASSERT_EQUAL(15, A_SumOfN(5));
-   TEST_ASSERT_EQUAL(55, A_SumOfN(10));
+   // Successful Case
+   TEST_ASSERT_EQUAL("[", accept_byte('['));
+   // Test that state is 'looking for cmd'
+   TEST_ASSERT_EQUAL("[B", accept_byte('B'));
+   // Test that state is length
+   TEST_ASSERT_EQUAL("[B4", accept_byte('4'));
+   // Test that state is getting data
+   TEST_ASSERT_EQUAL("[B48", accept_byte('8'));
+   TEST_ASSERT_EQUAL("[B485", accept_byte('5'));
+   TEST_ASSERT_EQUAL("[B4859", accept_byte('9'));
+   TEST_ASSERT_EQUAL("[B48592", accept_byte('2'));
+   // Test that state is looking for end
+   TEST_ASSERT_EQUAL("[B48592]", accept_byte(']'));
+   // Test looking for start
 
-   TEST_ASSERT_CALLED_TIMES(3, B_Sum);
-   TEST_ASSERT_CALLED_TIMES(3, B_Mult);
-   TEST_ASSERT_CALLED_TIMES(3, B_Div2);
 
-   TEST_ASSERT_EQUAL(1, B_Sum_fake.arg0_history[0]);
-   TEST_ASSERT_EQUAL(5, B_Sum_fake.arg0_history[1]);
-   TEST_ASSERT_EQUAL(10, B_Sum_fake.arg0_history[2]);
+   // Unsuccessful Case
+   TEST_ASSERT_EQUAL("", accept_byte('3'));   // should be looking for start
+
+   TEST_ASSERT_EQUAL("[", accept_byte('['));
+   TEST_ASSERT_EQUAL("", accept_byte(' '));   // should be looking for start
 }
