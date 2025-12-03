@@ -29,6 +29,14 @@ void test_start_to_cmd(void){
 
 TEST_CASE('A')
 TEST_CASE('B')
+TEST_CASE('!')
+void test_start_to_self(char ch){
+    TEST_ASSERT_NULL(accept_byte(ch));
+    TEST_ASSERT_EQUAL(STATE_START, mState);
+}
+
+TEST_CASE('A')
+TEST_CASE('B')
 TEST_CASE('C')
 void test_cmd_to_len(char ch){
     char *data = accept_byte('[');
