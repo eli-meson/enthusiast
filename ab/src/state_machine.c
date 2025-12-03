@@ -68,13 +68,17 @@ char * accept_byte(char c) {
         // }
         // break;
         case STATE_END:
-            if (c == ']') {
+            if ((c >= 'A' && c <= 'F') || (c >= '0' && c <= '9') || (c >= 'a' && c <= 'f')) {
+                buffer[pos] = c;
+                pos++;
+            }
+            else if (c == ']') {
                 buffer[pos] = c;
                 pos++;
                 buffer[pos] = '\0';
                 res = buffer;
                 mState = STATE_START;
-            } else if (c == '[') {
+            }else if (c == '[') {
                 reset();
                 mState = STATE_CMD;
                 buffer[pos] = c;
