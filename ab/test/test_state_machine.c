@@ -67,6 +67,21 @@ void test_len(char c, int expected){
 // }
 
 void test_full() {
+
+
+    accept_byte('[');
+    accept_byte('A');
+    accept_byte('0');
+    char * result = accept_byte(']');
+
+    TEST_ASSERT_EQUAL_STRING("[A0]", result);
+    // TEST_ASSERT_EQUAL("[A0]", result);
+}
+void test_full2() {
+    accept_byte('[');
+    accept_byte('A');
+    accept_byte('0');
+
     accept_byte('[');
     accept_byte('A');
     accept_byte('0');

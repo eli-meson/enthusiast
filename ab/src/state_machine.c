@@ -5,16 +5,20 @@
 
 State_t mState;
 char buffer[23];
-int length;
+int pos;
+
+void reset() {
+    pos = 0;
+    memset(buffer, 0, sizeof(buffer));
+}
 
 char * accept_byte(char c) {
-    static int pos;
 
     char * res = NULL;
     switch (mState) {
         case STATE_START:
-            pos = 0;
             if (c == '[') {
+                reset();
                 mState = STATE_CMD;
                 buffer[pos] = c;
                 pos++;
@@ -26,8 +30,8 @@ char * accept_byte(char c) {
                 buffer[pos] = c;
                 pos++;
             } else if (c == '[') {
+                reset();
                 mState = STATE_CMD;
-                pos = 0;
                 buffer[pos] = 0;
             }else  {
                 mState = STATE_START;
@@ -40,8 +44,8 @@ char * accept_byte(char c) {
                 pos++;
             }
             else if (c == '[') {
+                reset();
                 mState = STATE_CMD;
-                pos = 0;
                 buffer[pos] = c;
             }
             else if (c == '0') {
@@ -71,7 +75,10 @@ char * accept_byte(char c) {
                 res = buffer;
                 mState = STATE_START;
             } else if (c == '[') {
+                reset();
                 mState = STATE_CMD;
+                buffer[pos] = c;
+                pos++;
             }
             else  {
                 mState = STATE_START;
