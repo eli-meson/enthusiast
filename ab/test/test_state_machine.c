@@ -34,3 +34,11 @@ void test_cmd() {
     TEST_ASSERT_EQUAL(STATE_LEN, mState);
 }
 
+void test_len() {
+    mState = STATE_LEN;
+
+    accept_byte('9');
+
+    TEST_ASSERT_EQUAL(STATE_DATA, mState);
+}
+
