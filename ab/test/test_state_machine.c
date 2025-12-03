@@ -120,3 +120,28 @@ void test_full4() {
 
     TEST_ASSERT_EQUAL_STRING("[A13f]", result);
 }
+
+void test_max() {
+    TEST_ASSERT_NULL(accept_byte('['));
+    TEST_ASSERT_NULL(accept_byte('Z'));
+    TEST_ASSERT_NULL(accept_byte('9'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_EQUAL_STRING("[Z9111111111111111111]", accept_byte(']'));
+}
