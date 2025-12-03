@@ -48,10 +48,10 @@ void test_cmd_to_len(char ch){
 // Test that receiving open bracket on cmd stays at same state
 void test_cmd_to_self(void){
     TEST_ASSERT_EQUAL(STATE_START, mState);
-    char *data = accept_byte('[');
+    TEST_ASSERT_NULL(accept_byte('['));
     TEST_ASSERT_EQUAL(STATE_CMD, mState);
-    data = accept_byte('[');
-    TEST_ASSERT_EQUAL(NULL, data);
+
+    TEST_ASSERT_NULL(accept_byte('['));
     TEST_ASSERT_EQUAL(STATE_CMD, mState);
 }
 
@@ -62,5 +62,35 @@ TEST_CASE('b')
 void test_cmd_to_start(char ch){
     mState = STATE_CMD;
     char *data = accept_byte(ch);
+    TEST_ASSERT_EQUAL(STATE_START, mState);
+}
+
+void test_len_to_end(void){
+    mState = STATE_LEN;
+    TEST_ASSERT_NULL(accept_byte('0'));
+    TEST_ASSERT_EQUAL(STATE_END, mState);
+}
+
+TEST_CASE('1')
+TEST_CASE('5')
+TEST_CASE('9')
+void test_len_to_data(char ch) {
+    mState = STATE_LEN;
+    TEST_ASSERT_NULL(accept_byte(ch));
+    TEST_ASSERT_EQUAL(STATE_DATA, mState);
+}
+
+void test_len_to_cmd(void) {
+    mState = STATE_LEN;
+    TEST_ASSERT_NULL(accept_byte('['));
+    TEST_ASSERT_EQUAL(STATE_CMD, mState);
+}
+
+TEST_CASE('!')
+TEST_CASE('b')
+TEST_CASE('X')
+void test_len_to_start(char ch) {
+    mState = STATE_LEN;
+    TEST_ASSERT_NULL(accept_byte(ch));
     TEST_ASSERT_EQUAL(STATE_START, mState);
 }
