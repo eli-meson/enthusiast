@@ -122,9 +122,90 @@ void test_full4() {
 }
 
 void test_max() {
+
     TEST_ASSERT_NULL(accept_byte('['));
-//    TEST_ASSERT_NULL(accept_byte('Z'));
-//    TEST_ASSERT_NULL(accept_byte('9'));
+    TEST_ASSERT_NULL(accept_byte('Z'));
+    TEST_ASSERT_NULL(accept_byte('9'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_EQUAL_STRING("[Z9111111111111111111]", accept_byte(']'));
+}
+
+void test_max_start() {
+    TEST_ASSERT_NULL(accept_byte('['));
+
+    TEST_ASSERT_NULL(accept_byte('['));
+    TEST_ASSERT_NULL(accept_byte('Z'));
+    TEST_ASSERT_NULL(accept_byte('9'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_EQUAL_STRING("[Z9111111111111111111]", accept_byte(']'));
+}
+
+void test_max_cmd() {
+    TEST_ASSERT_NULL(accept_byte('['));
+    TEST_ASSERT_NULL(accept_byte('Z'));
+
+    TEST_ASSERT_NULL(accept_byte('['));
+    TEST_ASSERT_NULL(accept_byte('Z'));
+    TEST_ASSERT_NULL(accept_byte('9'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_NULL(accept_byte('1'));
+    TEST_ASSERT_EQUAL_STRING("[Z9111111111111111111]", accept_byte(']'));
+}
+
+void test_max_len() {
+    TEST_ASSERT_NULL(accept_byte('['));
+    TEST_ASSERT_NULL(accept_byte('Z'));
+    TEST_ASSERT_NULL(accept_byte('9'));
 
     TEST_ASSERT_NULL(accept_byte('['));
     TEST_ASSERT_NULL(accept_byte('Z'));

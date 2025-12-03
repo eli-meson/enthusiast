@@ -48,6 +48,7 @@ char * accept_byte(char c) {
                 reset();
                 mState = STATE_CMD;
                 buffer[pos] = c;
+                pos++;
             }
             else if (c == '0') {
                 mState = STATE_END;
@@ -58,16 +59,6 @@ char * accept_byte(char c) {
                 mState = STATE_START;
             }
             break;
-
-        // case STATE_DATA:
-        // if ((c >= 'A' && c <= 'F') || (c >= '0' && c <= '9') || (c >= 'a' && c <= 'f')) {
-        //     buffer[pos] = c;
-        //     pos++;
-        // }
-        // else if (c == '[') {
-        //     mState = STATE_CMD;
-        // }
-        // break;
         case STATE_DATA:
             if ((c >= 'A' && c <= 'F') || (c >= '0' && c <= '9') || (c >= 'a' && c <= 'f')) {
                 buffer[pos] = c;
@@ -106,9 +97,5 @@ char * accept_byte(char c) {
             }
             break;
     }
-
-    // if (mState == STATE_START || STATE_CMD) {
-    //     length = -1;
-    // }
     return res;
 }
