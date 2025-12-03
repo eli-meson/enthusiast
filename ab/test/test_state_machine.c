@@ -53,13 +53,15 @@ void test_len(char c, int expected){
     TEST_ASSERT_EQUAL(expected, mState);
 }
 
-// TEST_CASE('3', 4)
-// TEST_CASE('[', 2)
-// TEST_CASE('A', 1)
-// TEST_CASE('0', 5)
-// void test_(char c, int expected){
-//     mState = STATE_LEN;
-//     accept_byte(c);
+TEST_CASE('3', 4)
+TEST_CASE('b', 4)
+TEST_CASE('D', 4)
+TEST_CASE('[', 2)
+TEST_CASE(']', 1)
+TEST_CASE('$', 5)
+void test_data(char c, int expected){
+    mState = STATE_LEN;
+    accept_byte(c);
 
-//     TEST_ASSERT_EQUAL(expected, mState);
-// }
+    TEST_ASSERT_EQUAL(expected, mState);
+}
