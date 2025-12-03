@@ -3,6 +3,7 @@
 #include <ctype.h>
 
 State_t mState = STATE_START;
+char fsm_buf[23] = {"[A0]"};
 
 #define IS_CMD(X) (((X) >= 'A') && ((X) <= 'Z'))
 #define IS_LEN(X) ((X) >= '0' && (X) <= '9')
@@ -13,12 +14,14 @@ char* accept_byte(char c){
         if (c == '[') {
             mState = STATE_CMD;
         }
+
     } else if (mState == STATE_CMD) {
         if (isupper(c)) {
            mState = STATE_LEN; 
         } else if (c != '[') {
             mState = STATE_START;
         }
+
     } else if (mState == STATE_LEN){
         if (c == '0') {
             mState = STATE_END;        
@@ -30,6 +33,20 @@ char* accept_byte(char c){
         } else {
             mState = STATE_START;
         }
+
+    } else if (mState == STATE_DATA) {
+        // IMPLEMENT LATER
+
+    } else if (mState == STATE_END) {
+        if ( c == ']') {
+            mState = STATE_START;
+            return fsm_buf;
+        } else if (c == '['){
+            mState = STATE_CMD;
+        } else {
+            mState = STATE_START;
+        }
+            
     }
     return NULL;
 }

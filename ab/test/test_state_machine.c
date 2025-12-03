@@ -94,3 +94,29 @@ void test_len_to_start(char ch) {
     TEST_ASSERT_NULL(accept_byte(ch));
     TEST_ASSERT_EQUAL(STATE_START, mState);
 }
+
+void test_end_min_valid_return(void) {
+    TEST_ASSERT_EQUAL(STATE_START, mState);
+    TEST_ASSERT_NULL(accept_byte('['));
+    TEST_ASSERT_NULL(accept_byte('A'));
+    TEST_ASSERT_NULL(accept_byte('0'));
+
+    char *data = accept_byte(']');
+    TEST_ASSERT_EQUAL(STATE_START, mState);
+    TEST_ASSERT_EQUAL_STRING("[A0]", data);
+}
+
+void test_end_to_cmd(void) {
+    mState = STATE_END;
+    TEST_ASSERT_NULL(accept_byte('['));
+    TEST_ASSERT_EQUAL(STATE_CMD, mState);
+}
+
+TEST_CASE('b')
+TEST_CASE('!')
+TEST_CASE('G')
+void test_end_to_start_no_return(char ch) {
+    mState = STATE_END;
+    TEST_ASSERT_NULL(accept_byte(ch));
+    TEST_ASSERT_EQUAL(STATE_START, mState);
+}
